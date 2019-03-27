@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>sine wave</title>
+
+<style>
+body {
+   margin: 0px;
+   padding: 0px;
+   width: 100%;
+   background: #3f3f3f
+}
+
+#contents {
+  width: 400px;
+  background: #fff;
+}
+
+#canvas {
+  background-color: #fff;
+}
+
+</style>
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous">  
+</script>
+
+<script>
+  function draw(r = 50, t = 200, d = 1){
+    var degree = 0;        
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+
+    function loop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 1;
+        
+        drawWave(degree, r, t);
+        ctx.stroke();
+        degree -= d;    
+        requestAnimationFrame(loop);
+    }
+    
+    loop();
+
+    function drawWave(degree, r, t) {
+        for (var y = canvas.height; y >= 1; y -= 1) {
+            var x =- r * Math.sin((2 * Math.PI / t) * (degree + y)) * y * 0.006;
+            ctx.lineTo(x + (canvas.width / 2), canvas.height - y);
+        }
+    }
+  }
+
+  $(function(){
+    draw(undefined, undefined, undefined);
+
+    window.centerW = $(window).width() / 2;
+    window.stepX = $(window).width() / 2 / 50;
+
+    window.heightH = $(window).height();
+    window.stepY = $(window).height() / 100;
+    window.stepD = $(window).height() / 5;
+
+    $("body").on('touchmove', function() {
+      this.pageX = event.changedTouches[0].pageX;
+      this.pageY = event.changedTouches[0].pageY;
+      var r = (this.pageX - centerW) / stepX;
+      var t = (this.pageY) / stepY;
+      var d = (window.heightH - this.pageY) / stepY;
+      draw(r, t, undefined);
+    });
+  });
+</script>
+
+<head>
+<body>
+  <p>please use iphone</p>
+  <div id="contents">
+    <canvas  id="canvas" width="400" height="700">
+    </canvas>
+  </div>
+</body>
+</html>

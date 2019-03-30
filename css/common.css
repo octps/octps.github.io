@@ -1,0 +1,15 @@
+body,
+div {
+   margin: 0px;
+   padding: 0px;
+   width: 100%;
+}
+
+#contents {
+  width: 320px;
+  margin: 0 auto;
+}
+
+#canvas {
+  background-color: #fff;
+}

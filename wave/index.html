@@ -77,6 +77,27 @@ div {
       var d = (window.heightH - this.pageY) / stepY;
       draw(r, t, undefined);
     });
+
+    window.mouseDownFlag = false;
+    $(window).on('mousedown', function(e) {  
+        mouseDownFlag = true;
+    });
+
+    $(window).on('mouseup', function(e) {  
+        mouseDownFlag = false;
+    });
+
+    $(window).on('mousemove', function(e) {
+      if (mouseDownFlag == true) {
+        var x = e.clientX;
+        var y = e.clientY;
+        var r = (x - centerW) / stepX;
+        var t = (y) / stepY;
+        var d = (window.heightH - y) / stepY;
+        draw(r, t, undefined);
+      }
+    });
+
   });
 </script>
 
